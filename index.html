@@ -3,73 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        #chatbox {
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            height: 300px;
-            overflow-y: auto;
-        }
-        #userInput {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .message {
-            margin: 5px 0;
-        }
-        .user {
-            color: blue;
-        }
-        .bot {
-            color: green;
-        }
-    </style>
+    <title>Financial Health Calculator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Chatbot</h1>
-    <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type your message..." />
-    <script>
-        const chatbox = document.getElementById('chatbox');
-        const userInput = document.getElementById('userInput');
+    <div class="container">
+        <h2>Financial Health Calculator</h2>
+        
+        <div class="input-row">
+            <div class="box" id="income-expense-box">
+                <h3>Income & Expense Tracking</h3>
+                <input type="number" id="income" placeholder="Monthly Income" required>
+                <input type="number" id="expenses" placeholder="Monthly Expenses" required>
+            </div>
 
-        userInput.addEventListener('keydown', async (event) => {
-            if (event.key === 'Enter') {
-                const message = userInput.value;
-                displayMessage(message, 'user');
-                userInput.value = '';
+            <div class="box" id="emi-box">
+                <h3>EMI</h3>
+                <input type="number" id="emi" placeholder="Monthly EMI" required>
+            </div>
 
-                const response = await fetch('http://localhost:5000/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message }),
-                });
+            <div class="box" id="savings-box">
+                <h3>Savings</h3>
+                <input type="number" id="savings" placeholder="Monthly Savings" required>
+            </div>
+        </div>
 
-                const data = await response.json();
-                displayMessage(data.message, 'bot');
-            }
-        });
+        <button id="submit-button" disabled>Calculate Score</button>
 
-        function displayMessage(message, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', sender);
-            messageDiv.textContent = message;
-            chatbox.appendChild(messageDiv);
-            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-        }
-    </script>
+        <div id="result"></div>
+        <div id="speed-bar">
+            <div id="score-indicator"></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
 </body>
 </html>
